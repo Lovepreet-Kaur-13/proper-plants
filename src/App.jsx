@@ -1,5 +1,6 @@
 import { useState } from "react";
-import Plants from "./data";
+import PLANTS from "./data";
+import Plants from "./plants/Plants";
 
 export default function App() {
   const [cart, setCart] = useState([]);
@@ -34,7 +35,9 @@ export default function App() {
   return (
     <>
       <h1>Proper Plants</h1>
-      <main></main>
+      <main>
+        <Plants plants={PLANTS} addToCart={addToCart} />
+      </main>
     </>
   );
 }
