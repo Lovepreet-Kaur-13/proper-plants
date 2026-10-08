@@ -1,6 +1,7 @@
 import { useState } from "react";
 import PLANTS from "./data";
 import Plants from "./plants/Plants";
+import Cart from "./cart/Cart";
 
 export default function App() {
   const [cart, setCart] = useState([]);
@@ -9,34 +10,40 @@ export default function App() {
     const itemExists = cart.find((i) => i.id === plant.id);
     if (itemExists) {
       setCart(
-        cart.map((item) => {
+        cart.map((item) =>
           item.id === plant.id
             ? { ...item, quantity: item.quantity + 1 }
-            : item;
-        }),
+            : item,
+        ),
       );
     } else {
       const item = { ...plant, quantity: 1 };
-      setCart(...cart, item);
+      setCart([...cart, item]);
     }
   };
 
   const removeFromCart = (itemToRemove) => {
     setCart(
       cart
-        .map((item) => {
+        .map((item) =>
           item.id === itemToRemove.id
             ? { ...item, quantity: item.quantity - 1 }
-            : item;
-        })
+            : item,
+        )
         .filter((item) => item.quantity > 0),
     );
   };
+
   return (
     <>
       <h1>Proper Plants</h1>
       <main>
         <Plants plants={PLANTS} addToCart={addToCart} />
+        <Cart
+          cart={cart}
+          addToCart={addToCart}
+          removeFromCart={removeFromCart}
+        />
       </main>
     </>
   );
